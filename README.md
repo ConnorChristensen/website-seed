@@ -1,2 +1,2 @@
 # website-seed
-a template organizational strucutre for building websites
+a template organizational structure for building websites
