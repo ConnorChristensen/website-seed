@@ -32,6 +32,7 @@ var paths = {
 //move all the html files to the destination folder
 gulp.task('html', function() {
    return gulp.src(root + "**/*.html")
+       .pipe(plugin.flatten())
       .pipe(gulp.dest(destination));
 });
 
