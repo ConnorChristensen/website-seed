@@ -3,7 +3,7 @@
 //Requrements
 var gulp   = require('gulp');
 var plugin = require("gulp-load-plugins")({
-   pattern: ['gulp-*', 'gulp.*', 'main-bower-files'],
+   pattern: ['gulp-*', 'gulp.*'],
    replaceString: /\bgulp[\-.]/
 });
 

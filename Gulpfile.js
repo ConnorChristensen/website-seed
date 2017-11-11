@@ -5,7 +5,7 @@
 var gulp   = require('gulp');
 // automatically load gulp plugins into the object plugin
 var plugin = require("gulp-load-plugins")({
-   pattern: ['gulp-*', 'gulp.*', 'main-bower-files'],
+   pattern: ['gulp-*', 'gulp.*'],
    replaceString: /\bgulp[\-.]/
 });
 
