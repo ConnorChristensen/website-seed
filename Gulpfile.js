@@ -51,10 +51,10 @@ gulp.task('images', function() {
 // Cleaning //
 //////////////
 gulp.task('clean:tmp', function() {
-   return gulp.src('.temp-css').pipe(plugin.clean('.temp-css', {read: false}));
+   return gulp.src('.temp-css', {read: false}).pipe(plugin.clean());
 });
 gulp.task('clean:destination', function() {
-   return gulp.src('.temp-css').pipe(plugin.clean(destination, {read: false}));
+   return gulp.src(destination, {read: false}).pipe(plugin.clean());
 });
 
 ///////////////////
