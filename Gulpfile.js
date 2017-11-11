@@ -75,6 +75,18 @@ gulp.task('watch', function() {
 });
 
 
+////////////////
+// Main Calls //
+////////////////
+
+//simply builds the dist folder. Good for testing the build
+//process without serving the site
+gulp.task('build', gulp.series(
+    gulp.parallel('html', 'css', 'js', 'images'),
+    'inject',
+    'wire-port-local'
+));
+
 //build, format the socket.io url to localhost and serve the site
 gulp.task('local', gulp.series(
    gulp.parallel('html', 'css', 'js', 'images'),
