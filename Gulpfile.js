@@ -77,7 +77,7 @@ gulp.task('watch', function() {
 
 //build, format the socket.io url to localhost and serve the site
 gulp.task('local', gulp.series(
-   gulp.parallel('html', 'css', 'js', 'bower', 'images'),
+   gulp.parallel('html', 'css', 'js', 'images'),
    'inject',
    'wire-port-local',
    gulp.parallel('watch', 'serve')
@@ -85,7 +85,7 @@ gulp.task('local', gulp.series(
 //clean, build, and then format the socket.io url to the deployed instance
 gulp.task('prod', gulp.series(
    'clean',
-   gulp.parallel('html', 'css-prod', 'js', 'bower', 'images'),
+   gulp.parallel('html', 'css-prod', 'js', 'images'),
    'inject',
    'wire-port-prod'
 ));
