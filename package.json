@@ -12,7 +12,6 @@
     "test": "gulp test; karma start --single-run"
   },
   "dependencies": {
-    "bower": "^1.8.0",
     "config.json": "^0.0.4",
     "gulp": "gulpjs/gulp.git#4.0",
     "gulp-autoprefixer": "^4.0.0",
@@ -21,6 +20,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.0.0",
     "gulp-filter": "^5.0.1",
+    "gulp-flatten": "^0.3.1",
     "gulp-imagemin": "^3.3.0",
     "gulp-inject": "^4.2.0",
     "gulp-livereload": "^3.8.1",
@@ -30,7 +30,6 @@
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0",
-    "main-bower-files": "^2.13.1",
     "require-dir": "^0.3.2",
     "wiredep": "^4.0.0"
   },

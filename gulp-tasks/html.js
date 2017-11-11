@@ -3,7 +3,7 @@
 //Requrements
 var gulp   = require('gulp');
 var plugin = require("gulp-load-plugins")({
-   pattern: ['gulp-*', 'gulp.*', 'main-bower-files'],
+   pattern: ['gulp-*', 'gulp.*'],
    replaceString: /\bgulp[\-.]/
 });
 
@@ -32,6 +32,7 @@ var paths = {
 //move all the html files to the destination folder
 gulp.task('html', function() {
    return gulp.src(root + "**/*.html")
+       .pipe(plugin.flatten())
       .pipe(gulp.dest(destination));
 });
 
