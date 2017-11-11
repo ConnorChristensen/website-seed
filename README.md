@@ -20,3 +20,13 @@ The ones that you should be calling are probably:
 * `gulp prod` - which builds a production version of the site, ready for deployment
 * `gulp build` - builds without serving up the site
 * `gulp clean` - cleans out the files that Gulp builds
+
+
+### HTML
+To inject files like CSS and JS into an HTML file, add in the tag below to tell Gulp where to inject the files:
+<!-- inject:<file type> -->
+<!-- endinject -->
+
+For example, if you wanted to inject css:
+<!-- inject:css -->
+<!-- endinject -->
