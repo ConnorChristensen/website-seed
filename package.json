@@ -1,9 +1,6 @@
 {
   "name": "",
   "private": true,
-  "devDependencies": {
-    "gulp": "github:gulpjs/gulp#4.0"
-  },
   "engines": {
     "node": ">=0.10.0"
   },
@@ -13,7 +10,7 @@
   },
   "dependencies": {
     "config.json": "^0.0.4",
-    "gulp": "gulpjs/gulp.git#4.0",
+    "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-cache": "^0.4.6",
     "gulp-clean": "^0.3.2",
@@ -30,6 +27,7 @@
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0",
+    "minimatch": "^3.0.4",
     "require-dir": "^0.3.2",
     "wiredep": "^4.0.0"
   },
