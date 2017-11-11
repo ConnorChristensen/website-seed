@@ -15,6 +15,6 @@
       "url": "http://localhost:8080/"
    },
    "prod": {
-      "url": "http://ngdemo.dslab.ad.adp.com:7777/"
+      "url": "http://"
    }
 }
