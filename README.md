@@ -11,7 +11,7 @@ Then you are ready to go
 ## Use Instructions
 This project makes use of Gulp v4.0 which is still under development. It has really nice features built in that make build pipelines quick and efficient.
 
-This project should ultimately allow for configuration exclusively through the config.json, but for now, some basic knowledge of Gulp will make working with this structure and configuing it much easier.
+This project should ultimately allow for configuration exclusively through the config.json, but for now, some basic knowledge of Gulp will make working with this structure and configuring it much easier.
 
 To see a list of all available tasks, type `gulp ---tasks`.
 

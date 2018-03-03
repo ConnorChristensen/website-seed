@@ -1,105 +1,96 @@
 'use strict';
-
-//Requrements
-
 var gulp   = require('gulp');
 // automatically load gulp plugins into the object plugin
 var plugin = require("gulp-load-plugins")({
    pattern: ['gulp-*', 'gulp.*'],
    replaceString: /\bgulp[\-.]/
 });
-
-// auto inject dependencies
-var wiredep     = require("wiredep").stream;
-// module to import folders
-var requireDir = require('require-dir');
-// bring in the gulp tasks from the gulp-tasks folder
-requireDir('./gulp-tasks');
-
-
-//config paths
+var browserSync = require('browser-sync').create();
 var config      = require('config.json')('./config.json');
 var root        = config.root + "/";
 var destination = config.end + "/";
-var anyFile     = "/**/*";
-var not         = "!";
 var paths = {
    start: {
       html: root + config.folders.html + "/*.html",
-      css:  root + config.folders.css  + "/*.css",
-      less: root + config.folders.less + "/*.less",
-      scss: root + config.folders.scss + "/*.scss",
-      js:   root + config.folders.js   + "/**/*.js"
-   },
-   end: {
-      html: destination + "views/",
-      css:  destination,
-      js:   destination + "scripts/",
+      css:  root + config.folders.css  + "/*.styl",
+      js:   root + config.folders.js   + "/*.js"
    }
 }
+///////////
+// Files //
+///////////
+// move all the html files to the destination folder
+gulp.task('html', function() {
+   return gulp.src(paths.start.html)  // get our html files
+      .pipe(plugin.flatten())         // flatten the folder hierarchy
+      .pipe(gulp.dest(destination));  // send them over to the destination folder
+});
 
-////////////////
-// Misc Files //
-////////////////
+// get all js files and put them in the destination folder
+gulp.task('js', function() {
+   return gulp.src(paths.start.js)    //get our js files
+      .pipe(gulp.dest(destination));  //move them to our destination folder
+});
+
+// compile our stylus files and send them straight to dist
+gulp.task('css', function() {
+   return gulp.src(paths.start.css)   //get our css files
+      .pipe(plugin.stylus())          //compile them
+      .pipe(gulp.dest(destination));  //put them in a temp folder
+});
+
 gulp.task('images', function() {
-   //get our images folder
-   return gulp.src(root + 'images/**/*')
+   // get our images folder and send them over to an images folder in destination
+   return gulp.src(root + paths.start.images + '/**/*')
       .pipe(gulp.dest(destination + 'images'));
 });
+
 
 //////////////
 // Cleaning //
 //////////////
-gulp.task('clean:tmp', function() {
-   return gulp.src('.temp-css', {read: false}).pipe(plugin.clean());
-});
-gulp.task('clean:destination', function() {
+// clean the destination folder and do it blindly to speed it up
+gulp.task('clean', function() {
    return gulp.src(destination, {read: false}).pipe(plugin.clean());
 });
 
-///////////////////
-// Task Managers //
-///////////////////
-//inject the js and css into main
-gulp.task('inject', gulp.series('inject-css', 'inject-js'));
-//remove all files and folders used for the build process
-gulp.task('clean', gulp.parallel('clean:destination', 'clean:tmp'));
 
 ///////////
 // Watch //
 ///////////
 gulp.task('watch', function() {
-   gulp.watch(root + 'styles/**/*.scss', gulp.series('css'));
-   gulp.watch(root + '**/*.html',        gulp.series('html', 'inject', 'wire-port-local'));
-   gulp.watch(root + '**/*.js',          gulp.series('js', 'inject', 'wire-port-local'));
+   gulp.watch(root + '**/*.styl', gulp.series('css'));
+   gulp.watch(root + '**/*.html', gulp.series('html'));
+   gulp.watch(root + '**/*.js',   gulp.series('js'));
 });
 
+// serve up the page on a browser
+gulp.task('serve', function() {
+    browserSync.init({
+        server: {
+            baseDir: destination
+        },
+        browser: "google chrome"
+    });
+    gulp.watch(root + '**/*.js',   gulp.series('js'));
+    gulp.watch(root + '**/*.styl', gulp.series('css'));
+    gulp.watch(root + '**/*.html', gulp.series('html'));
+});
 
 ////////////////
 // Main Calls //
 ////////////////
-
 //simply builds the dist folder. Good for testing the build
 //process without serving the site
-gulp.task('build', gulp.series(
-    gulp.parallel('html', 'css', 'js', 'images'),
-    'inject',
-    'wire-port-local'
+gulp.task('build', gulp.parallel(
+  'html', 'css', 'js', 'images'
 ));
 
 //build, format the socket.io url to localhost and serve the site
 gulp.task('local', gulp.series(
-   gulp.parallel('html', 'css', 'js', 'images'),
-   'inject',
-   'wire-port-local',
+   'build',
    gulp.parallel('watch', 'serve')
 ));
-//clean, build, and then format the socket.io url to the deployed instance
-gulp.task('prod', gulp.series(
-   'clean',
-   gulp.parallel('html', 'css-prod', 'js', 'images'),
-   'inject',
-   'wire-port-prod'
-));
+
 //build for local by default
 gulp.task('default', gulp.parallel('local'));

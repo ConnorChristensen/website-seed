@@ -4,17 +4,7 @@
    "folders": {
       "html": "views",
       "css":  "styles",
-      "less": "styles",
-      "scss": "styles",
-      "js":   "scripts"
-   },
-   "localhost": {
-      "connection": "http",
-      "hostname": "localhost",
-      "port": 8080,
-      "url": "http://localhost:8080/"
-   },
-   "prod": {
-      "url": "http://"
+      "js":   "scripts",
+      "images": "images"
    }
 }
