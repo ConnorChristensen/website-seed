@@ -28,15 +28,15 @@ gulp.task('html', function() {
 
 // get all js files and put them in the destination folder
 gulp.task('js', function() {
-   return gulp.src(paths.start.js)    //get our js files
-      .pipe(gulp.dest(destination));  //move them to our destination folder
+   return gulp.src(paths.start.js)    // get our js files
+      .pipe(gulp.dest(destination));  // move them to our destination folder
 });
 
 // compile our stylus files and send them straight to dist
 gulp.task('css', function() {
-   return gulp.src(paths.start.css)   //get our css files
-      .pipe(plugin.stylus())          //compile them
-      .pipe(gulp.dest(destination));  //put them in a temp folder
+   return gulp.src(paths.start.css)   // get our css files
+      .pipe(plugin.stylus())          // compile them
+      .pipe(gulp.dest(destination));  // send them over to the destination folder
 });
 
 gulp.task('images', function() {
@@ -80,17 +80,17 @@ gulp.task('serve', function() {
 ////////////////
 // Main Calls //
 ////////////////
-//simply builds the dist folder. Good for testing the build
-//process without serving the site
+// simply builds the dist folder. Good for testing the build
+// process without serving the site
 gulp.task('build', gulp.parallel(
   'html', 'css', 'js', 'images'
 ));
 
-//build, format the socket.io url to localhost and serve the site
+// build, format the socket.io url to localhost and serve the site
 gulp.task('local', gulp.series(
    'build',
    gulp.parallel('watch', 'serve')
 ));
 
-//build for local by default
+// build for local by default
 gulp.task('default', gulp.parallel('local'));
