@@ -78,9 +78,8 @@ gulp.task('serve', function() {
         },
         browser: "google chrome"
     });
-    gulp.watch(root + '**/*.js',   gulp.series('js'));
-    gulp.watch(root + '**/*.styl', gulp.series('css'));
-    gulp.watch(root + '**/*.html', gulp.series('html'));
+    // when anything changes, reload the webpage
+    gulp.watch(destination + '*').on('change', browserSync.reload);
 });
 
 ////////////////
