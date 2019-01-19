@@ -27,8 +27,14 @@ gulp.task('html', function() {
 });
 
 // get all js files and put them in the destination folder
-gulp.task('js', function() {
+gulp.task('js-dev', function() {
    return gulp.src(paths.start.js)    // get our js files
+      .pipe(gulp.dest(destination));  // move them to our destination folder
+});
+
+gulp.task('js-prod', function() {
+   return gulp.src(paths.start.js)    // get our js files
+      .pipe(plugin.uglify())
       .pipe(gulp.dest(destination));  // move them to our destination folder
 });
 
@@ -61,7 +67,7 @@ gulp.task('clean', function() {
 gulp.task('watch', function() {
    gulp.watch(root + '**/*.styl', gulp.series('css'));
    gulp.watch(root + '**/*.html', gulp.series('html'));
-   gulp.watch(root + '**/*.js',   gulp.series('js'));
+   gulp.watch(root + '**/*.js',   gulp.series('js-dev'));
 });
 
 // serve up the page on a browser
@@ -83,14 +89,17 @@ gulp.task('serve', function() {
 // simply builds the dist folder. Good for testing the build
 // process without serving the site
 gulp.task('build', gulp.parallel(
-  'html', 'css', 'js', 'images'
+  'html', 'css', 'images'
 ));
 
 // build, format the socket.io url to localhost and serve the site
-gulp.task('local', gulp.series(
+gulp.task('dev', gulp.series(
    'build',
+   'js-dev',
    gulp.parallel('watch', 'serve')
 ));
 
+gulp.task('prod', gulp.parallel('build', 'js-prod'));
+
 // build for local by default
-gulp.task('default', gulp.parallel('local'));
+gulp.task('default', gulp.parallel('dev'));
