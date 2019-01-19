@@ -11,12 +11,12 @@
   "dependencies": {
     "browser-sync": "^2.24.5",
     "config.json": "^0.0.4",
-    "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-autoprefixer": "^4.0.0",
-    "gulp-clean": "^0.3.2",
-    "gulp-flatten": "^0.3.1",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-flatten": "^0.4.0",
     "gulp-load-plugins": "^1.5.0",
-    "gulp-print": "^2.0.1",
+    "gulp-print": "^5.0.0",
     "gulp-stylus": "^2.7.0",
     "gulp-uglify": "^3.0.0",
     "minimatch": "^3.0.4"
