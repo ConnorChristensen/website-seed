@@ -21,27 +21,29 @@ var paths = {
 ///////////
 // Files //
 ///////////
-// move all the html files to the destination folder
-gulp.task('html', function() {
+function html() {
    return gulp.src(paths.start.html)  // get our html files
       .pipe(fileinclude({             // @@include('') allows file inclusion
         prefix: '@@',
         basepath: '@file'
       }))
       .pipe(gulp.dest(destination));  // send them over to the destination folder
-});
+}
+html.description = "Move all the html files to the destination folder";
+gulp.task(html);
 
-// get all js files and put them in the destination folder
-gulp.task('js-dev', function() {
+function jsDev() {
    return gulp.src(paths.start.js)    // get our js files
        .pipe(fileinclude({            // @@include('') allows file inclusion
          prefix: '@@',
          basepath: '@file'
        }))                            // inject json files
       .pipe(gulp.dest(destination));  // move them to our destination folder
-});
+}
+jsDev.description = "Get all js files and put them in the destination folder";
+gulp.task(jsDev);
 
-gulp.task('js-prod', function() {
+function jsProd() {
    return gulp.src(paths.start.js)    // get our js files
        .pipe(fileinclude({            // @@include('') allows file inclusion
          prefix: '@@',
@@ -49,50 +51,59 @@ gulp.task('js-prod', function() {
        }))                            // inject json files
        .pipe(plugin.uglify())
       .pipe(gulp.dest(destination));  // move them to our destination folder
-});
+}
+jsProd.description = "Compress js on moving to the destination folder";
+gulp.task(jsProd);
 
-// compile our stylus files and send them straight to dist
-gulp.task('css', function() {
+function css() {
    return gulp.src(paths.start.css)   // get our css files
       .pipe(plugin.stylus())          // compile them
       .pipe(gulp.dest(destination));  // send them over to the destination folder
-});
+}
+css.description = "Compile our stylus files and send them straight to dist";
+gulp.task(css);
 
-gulp.task('images-dev', function() {
+function imagesDev() {
    // get our images folder and send them over to an images folder in destination
    return gulp.src(paths.start.images)
       .pipe(gulp.dest(destination + 'images'));
-});
+}
+imagesDev.description = "Moves images to destination folder";
+gulp.task(imagesDev);
 
-gulp.task('images-prod', function() {
+function imagesProd() {
    // get our images folder and send them over to an images folder in destination
    return gulp.src(paths.start.images)
       .pipe(plugin.image())
       .pipe(gulp.dest(destination + 'images'));
-});
+}
+imagesProd.description = "Moves images to destination folder and compresses them";
+gulp.task(imagesProd);
 
 
 //////////////
 // Cleaning //
 //////////////
 // clean the destination folder and do it blindly to speed it up
-gulp.task('clean', function() {
+function clean() {
    return gulp.src(destination, {read: false}).pipe(plugin.clean());
-});
-
+}
+clean.description = "Cleans up the destination directory";
+gulp.task(clean);
 
 ///////////
 // Watch //
 ///////////
-gulp.task('watch', function() {
+function watch() {
    gulp.watch(root + '**/*.styl', gulp.series('css'));
    gulp.watch(root + '**/*.html', gulp.series('html'));
    gulp.watch(root + '**/*.js',   gulp.series('js-dev'));
    gulp.watch(paths.start.images, gulp.series('images-dev'));
-});
+}
+watch.description = "Watches all source files for changes";
+gulp.task(watch);
 
-// serve up the page on a browser
-gulp.task('serve', function() {
+function serve() {
     browserSync.init({
         server: {
             baseDir: destination
@@ -101,7 +112,9 @@ gulp.task('serve', function() {
     });
     // when anything changes, reload the webpage
     gulp.watch(destination + '*').on('change', browserSync.reload);
-});
+}
+serve.description = "Serve up the page on a browser";
+gulp.task(serve);
 
 ////////////////
 // Main Calls //
@@ -112,11 +125,11 @@ gulp.task('build', gulp.parallel('html', 'css'));
 
 // build, format the socket.io url to localhost and serve the site
 gulp.task('dev', gulp.series(
-   gulp.parallel('build', 'js-dev', 'images-dev'),
+   gulp.parallel('build', 'jsDev', 'imagesDev'),
    gulp.parallel('watch', 'serve')
 ));
 
-gulp.task('prod', gulp.parallel('build', 'images-prod', 'js-prod'));
+gulp.task('prod', gulp.parallel('build', 'imagesProd', 'jsProd'));
 
 // build for local by default
 gulp.task('default', gulp.parallel('dev'));
