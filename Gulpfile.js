@@ -97,8 +97,8 @@ gulp.task(clean);
 function watch() {
    gulp.watch(root + '**/*.styl', gulp.series('css'));
    gulp.watch(root + '**/*.html', gulp.series('html'));
-   gulp.watch(root + '**/*.js',   gulp.series('js-dev'));
-   gulp.watch(paths.start.images, gulp.series('images-dev'));
+   gulp.watch(root + '**/*.js',   gulp.series('jsDev'));
+   gulp.watch(paths.start.images, gulp.series('imagesDev'));
 }
 watch.description = "Watches all source files for changes";
 gulp.task(watch);
